@@ -49,7 +49,8 @@ in your console. */
 
   //Code Here
 
-
+var makeCall = callFriend();
+makeCall(435-215-9248);
 
 
 
@@ -75,7 +76,12 @@ properly. */
 //   count(); // 3
 //   count(); // 4
 
-
+function makeCounter(){
+  var count = 0 ;
+  return function(){
+    return count += 1;
+  }
+}
 
 
 
@@ -98,9 +104,15 @@ the module pattern to achieve this. */
 function counterFactory(value) {
 
   // Code here.
-
+  var count = value
 
   return {
+    inc: function(){
+      return count += 1;
+    },
+    dec: function(){
+      return count -= 1;
+    }
   }
 }
 
@@ -129,10 +141,13 @@ function motivation(firstname, lastname){
   var welcomeText = 'You\'re doing awesome, keep it up ';
 
   // code message function here.
-
+   function message(){
+    welcomeText += firstname + " " + lastname +".";
+    return welcomeText;
+  }
 
   //Uncommment this to return the value of your invoked message function
-  //return message();
+  return message();
 
 }
 
@@ -172,12 +187,15 @@ var module = (function() {
 
   return {
     // Code here.
+    publicMethod: function(){
+      return privateMethod();
+    }
   };
 
 })();
 
 // Uncomment this after you create your public method
-//   module.publicMethod();
+   module.publicMethod();
 
 
 
@@ -200,13 +218,13 @@ then 3, etc). Run this code in your console to see what the output is. */
 // To make this code work you will need to create a new scope for every iteration.
 function timeOutCounter() {
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000)
+    setTimeout(newScope(i), i * 1000)
   }
 
   function newScope(i) {
-    console.log(i)
+    return function(){
+      console.log(i) 
+    }
   }
 }
 timeOutCounter();
@@ -234,3 +252,13 @@ var funcArray = [];
 
   *Hint: Don't let this fool you. Break down what's really happening here.
 */
+  
+  for(var i = 0; i <=5; i++){
+    funcArray.push(returnVal(i));
+  }
+
+  function returnVal(i){
+    return function(){
+      return i;
+    }
+  }
